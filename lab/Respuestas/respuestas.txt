@@ -8,4 +8,6 @@ los data races. ¿Se muestran las líneas de código involucradas?, ¿Qué otra 
 2)¿Qué ocurre cuando usted elimina una de las líneas que generan problemas en el código? Ahora agrege un lock alrededor
 de las actualizaciones de la variable compartida, y entonces alrededor de ambas. ¿Qué reporta helgrind en cada uno de estos
 casos?
+    R//Cuando se elimina una de las lineas que presenta problemas esto alivia el problema, osea, no hay posibilidad de race
+    condition. y al envolver las 2 lineas con locks, el helgrind reporta un resumen de 0 errores de 0 contextos.
 
