@@ -1,0 +1,11 @@
+1)Primero codifique main-race.c. Examine el código de manera que usted pueda ver (ojalá de manera obvia) un data race 
+en el código. Ahora ejecute helgrind (al teclear valgrind --tool=helgrind ./main-race) y vea como este programa reporta 
+los data races. ¿Se muestran las líneas de código involucradas?, ¿Qué otra información entrega este programa?
+    R//En un principio el main-race.c no presenta ningun tipo de error debido a que las secciones criticas están cubiertas 
+    por locks. Al retirar un lock y ejecutar valgrind --tool=helgrind ./main-race este nos da una información de la creacion
+    de los hilos, ademas de en que lineas es posible que se de un race condition.
+
+2)¿Qué ocurre cuando usted elimina una de las líneas que generan problemas en el código? Ahora agrege un lock alrededor
+de las actualizaciones de la variable compartida, y entonces alrededor de ambas. ¿Qué reporta helgrind en cada uno de estos
+casos?
+
