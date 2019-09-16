@@ -11,3 +11,28 @@ casos?
     R//Cuando se elimina una de las lineas que presenta problemas esto alivia el problema, osea, no hay posibilidad de race
     condition. y al envolver las 2 lineas con locks, el helgrind reporta un resumen de 0 errores de 0 contextos.
 
+3)Ahora observe main-deadlock.c. Examine el código. Este código tiene un problema conocido como deadlock.
+¿Puede ver que problema podrá este tener?
+    R//se presenta un deadlock, cuando el hilo p1 adquiere el lock de m1 y realiza inmeadiatamente un cambio de contexto; 
+    así mismo el hilo p2 adquiere el lock de m2, luego el hilo p2 intenta adquirir el lock de m1 el cual ya se encuentra 
+    bloqueado por lo cual cambia de contexto hacia p1; y el hilo p1 procede adquirir el lock de m2, el cual ya se encuentra 
+    bloqueado por el hilo p2. Es decir, cada hilo se encuentra a la espera de un recurso que libera el otro hilo.
+
+4)Ahora ejecute helgrind en este código. ¿Qué reporta helgrind?
+    R//helgrind reporta un error en el orden de adquisición de los locks.
+
+5)Ahora ejecute helgrind en main-deadlock-global.c. Examine el código. ¿Tiene este el mismo problema que main-deadlock.c? 
+¿Muestra helgrind el mismo reporte de error? ¿Qué dice esto a cerca de herramientas como helgrind?
+    R//En este problema resuelve el problema del deadlock de main-deadlock.c, ya que hace uso de un mutex que abarca 
+    la seccion critica lo que permite que no haya un interbloqueo. Al hacer uso de helgrind esta herramienta reporta el
+    mismo error que en main-deadlock.c lo que nos hace pensar que esta herramienta no es del todo confiable.
+6)Ahora observe main-signal.c. Este código usa una variable (done) para señalar que el hijo esta hecho y que el padre puede
+continuar. ¿Por qué este códido es ineficiente? (En que termina el padre dedicando su tiempo, si el hijo toma una gran
+cantidad de tiempo en completarse).
+    R//Este código es ineficiente debido a que hace uso de un while el cual gasta CPU mientras el hilo termina su ejecución,
+    lo que ocasiona que el padre termine gastando todos sus ciclos de ejecución evaluando esta condición.
+7)Ahora ejecute helgrind para este programa. ¿Qué reporta helgrind?, ¿Es correcto el código?
+    R//El helgrind reporta un race condition, debido a que se presenta una competencia por la variable done, la cual es 
+    accedida por el padre y el hilo. Y el código es correcto en terminos de sintaxis.
+
+
